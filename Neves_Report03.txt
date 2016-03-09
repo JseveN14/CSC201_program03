@@ -1,0 +1,80 @@
+Jessica Neves
+CSC 201
+3/8/2016
+Lab 03
+
+DNA Matcher
+
+For this week's program we made a DNA Matcher. The assignment was focused on string manipulation, creating new strings from old ones and, and string comparisons (equality/inequality). We were tasked to make a DNA strand complement, reverse, and match the bases of two strands. 
+
+This week, we created two files to save each half of the assigment. I will start by describing the variables of each file, and then explain how each program works.
+
+Part 1 Variables:
+-BASES: a string constant local to the function validity(); used to store the  characters that we are using as nucleotide bases in our DNA strands, checked     for membership in.
+-base: integer type local to function validity(); used in for loop iteration,     is checked to be a member of BASES.
+-strand: string type local to function validity(); iterated through in the for    loop
+
+-DNA_complement: string type local to complement(); used to store new  complementary DNA strand
+-base: integer type local to complement(); used in for loop iteration, checked  for equality to each nucleotide.
+-strand: string type local to complement(); iterated through in for loop
+
+-strand_reverse: string type local to reverse(); stores the reversed DNA strand
+-strand: string type local to reverse(); represents DNA strand, sliced in  function to make reverse strand.
+
+-user_input: string type global, reset at the beginning of each while loop,  assigned to input string. 
+-strand: string type global, assigned to "user_input", used when function is  called
+-user_input_1: string type global, used for while loop, assigned to input string
+-user_input_2: string type global, used for while loop, assigned to input string
+-strand_1: string type global, assigned to user_input_1, used when function is  called, compared to strand_2
+-strand_2: string type global, assigned to user_input_2, used when function is    called, compared to strand_1
+
+Part 2 Variables:
+-BASES: string constant local to validity(); stores the valid characters
+-base: integer type local to function validity(); use in for loop iteration, is  checked to be a member of BASES
+-strand: string type local to validity(); represents DNA strand
+
+-count: integer type local to matching(); used as a counter, incremented
+-matches: integer type local to matching(); used to track total matches in the  DNA sequences
+-strand_1: string type local to matching(); represents one DNA strand
+-strand_2: string type local to matching(); represents second DNA strand
+-match: integer type local to matching(); used in for loop iteration
+
+-count: integer type local to consec_matching(); incremented, used as counter
+-longest: integer type local to consec_matching(); incremented within if   statement, value appended to list
+-consecutive: list local to consec_matching(); set empty, values appended to it  to store longest consecutive match
+-strand_1: string type local to consec_matching(); represents one DNA strand
+-strand_2: string type local to consec_matching(); represents second DNA strand
+
+-user_input_1: string type global, used for while loop, reset at beginning of   each while loop, stores input string
+-user_input_2: string type global, used for while loop, reset at beginning of     each while loop, stores input string
+-strand_1: string type global, assigned to user_input_1, used when function is  called
+-strand_2: string type global, assigned to user_input_2, used when function is  called
+-target: string type global, used for while loop, stores input string, used to    call functions
+-gene_database: list type global, stores 3 reference DNA strands
+-ref_consecutive: list type global, stores the longest consecutive matches  between the reference strand and the target strand
+-ref_matches: list type global, stores the total matches between the reference   strand and the target strand
+-ref_index: integer type global, incremented in for loop and used to index the  gene_database
+-consec_entry: tuple type global, reassigned during each iteration of the for  loop. Each tuple includes the reference gene and the longest consecutive match
+ appended to list ref_consecutive
+-match_entry: tuple type global, reassigned during each iteration of the for   loop. Each tuple includes the reference gene and the number of total matches
+ appended to list ref_matches
+
+In this section of the report I will be discussing how each program functions. In both, I started by listing all my functions first. In Part 1 my functions were validity(), complement(), and reverse(). Below, I separated each project task into it's own while loop. This gives the user the ability to try different combinations and see the results. I also checked each input against my function validity(). In project 4, I asked the user for 2 strings to input, checked that each was valid before proceding, then compared the complement and reverse strings of both to find if they represented the same DNA fragment.
+
+It was much easier using functions to build this program with. My first function, validity() checks if the characters in a strand are valid or invalid. It uses the constant BASES, and a for loop that iterates through each character in the string. An if statement checks if each iterated character is a member in BASES. If not, it returns "Invalid sequence" and breaks out of the loop so that the statement only prints once for the first instance of an invalid character and not for any other invalid characters afterwards. If it makes it through the whole string without finding an invalid character, an else statement returns "Valid sequence". A special case I accounted for was an accidental Enter.
+
+The function complement() uses a for loop that iterates through the strand and asks in an if-elif-else block if the iterated character is equal to one of the four bases. If it is, the complementary base is added (+=) to an empty string called DNA_complement. At the end, this string is returned.
+
+The reverse() function was very simple to make, and uses special slicing. Indexing follows the model [start:stop:step] The strand is sliced [::-1] which will read the string backwards one character at a time. The backwards string is stored as strand_reverse and returned when the function is called.
+
+In Part 2 my functions were validity(), matching(), and consec_matching(). validity() works the same as in Part 1. matching() returns the total number of matches between two DNA strands. consec_matching() returns the longest consecutive match between two DNA strands.
+
+matching() uses two counter variables. count is incremented and used for indexing each string in the same place, for example strand_1[0] == strand_2[0]. matches starts at 0 and is incremented by 1 everytime the equality is true. At the end, the total number of matches is returned. This function accounts for strands being of two different lenghts. If one is longer than the other, they are only compared up to the length-1 of the shortest strand, otherwise an out of range error is given.
+
+consec_matching() follows the same idea as matching(), except that it is looking for the longest consecutive matches. As the for loop is iterated through, everytime a match is found, the variable "longest" is incremented by 1. This value is then appended to a list called consecutive. Each time a non-match occurs, the value of "longest" is reset. At the end, max(consecutive) returns the largest value occuring in the list.
+
+In this part, as in Part 1, I kept with the format of while loops. Two user inputs are collected and stored as strand_1 and strand_2. Project 5 tests the function matching(), and project 6 tests the function consec_matching(). Project 7 tasked us to check a target string against 3 reference strings. In this part of the program I used the variable target to store the target strand. I stored my 3 reference genes in a list called gene_database. I set two empty lists, ref_consecutive to store the consecutive matches and the corresponding reference strand, and ref_matches to store the total matches and the corresponding reference strand. I used a counter I called ref_index which I used to index the position of the reference strand I wanted to store. A for loop iterates through the gene_database. So, starting at [0] I called my function consec_matching(gene_database[0], target). This would return the value of consecutive matches between the first reference strand and the target. I stored that value with gene_database[0] in a tuple called "consec_entry". I did the same with my function matching() and stored that value and reference strand in a tuple called match_entry. I appended each of these tuples to it's corresponding list (consec_entry to ref_consecutive, and match_entry to ref_matches). I had to be careful to store the integer value first so that when I used max() on each of the lists at the end, the correct tuple would be returned.
+
+This program was very challenging and I found a few pieces I couldn't explain. In part one, the biggest challenge was creating my function for verifying valid sequences. I liked the idea of using the constant to store the bases. The challenge was the for loop. I had to be sure to check for characters that were not bases first since it stops at the first instance of an invalid character. By checking for base in BASES, the user could input a string that started with a valid character, but ends with anything else and the loop would return a "Valid sequence". I also only wanted it to print each statement once. I implemented a break statement after the first invalid instance is found so that it exits the loop without continuing to iterate and print. If no invalid instance is found, the else statement is taken and the string is "Valid". This setup worked for identifying spaces as well, but not if the user accidentally pressed Enter. I couldn't explain why for either case.
+
+In completing this assignment I have found I can critique some of my methods. I will admit, my naming conventions are messy and were a little confusing when scrolling from my functions through my code (repeating strand_1 and strand_2, and user_input_1 and user_input_2). I would note one of the flaws in this program being the need to check for valid sequences. The first two tasks do not specify checking for valid sequences, but if they are not checked, the program will crash with improper input. I impressed myself in project 7 when I stored tuples in my lists. I am looking forward to revisiting this program later in the semester.
